@@ -7,8 +7,8 @@ import ListItem from '@mui/material/ListItem'
 import Divider from '@mui/material/Divider'
 import EditTodo from './EditTodo'
 import Box from '@material-ui/core/Box'
-import { TodoStore } from '../Store/todoStore'
 import DeleteIcon from '@material-ui/icons/Delete'
+import EditIcon from '@material-ui/icons/Edit'
 
 interface Iprops {
     store?: Store
@@ -34,7 +34,6 @@ class TodoList extends Component<Iprops, Istate> {
 
     handleToggle = (alter: boolean) => {
         this.setState((preState) => { return { toggle: !alter } })
-        console.log("toggle", this.state.toggle)
     }
 
     // Update Todo functionality
@@ -42,7 +41,6 @@ class TodoList extends Component<Iprops, Istate> {
         const result = this.props.store?.todoStore.todos.find((todo) => {
             return todo.id === id
         })
-        console.log("Result", result)
         this.setState({ editData: result })
         this.handleToggle(this.state.toggle)
     }
@@ -68,7 +66,7 @@ class TodoList extends Component<Iprops, Istate> {
                                         <ListItem>
                                             <Button>Done</Button>
                                             {ele.name}
-                                            <Button onClick={() => this.handleEdit(ele.id!)}>Edit</Button>
+                                            <EditIcon onClick={() => this.handleEdit(ele.id!)} />
                                             <DeleteIcon onClick={() => this.handleRemove(ele.id!)} />
                                         </ListItem>
                                     )
