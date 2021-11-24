@@ -1,4 +1,5 @@
-import { observable, action, makeObservable} from 'mobx'
+import { observable, action, makeObservable } from 'mobx'
+import { act } from 'react-dom/test-utils';
 import { Store } from './store';
 
 interface Itodo {
@@ -9,17 +10,37 @@ interface Itodo {
 
 // Store
 export class TodoStore {
-    constructor(store: Store) {    
+
+    todos: Itodo[] = [];
+
+    constructor(store: Store) {
+        makeObservable(this, {
+            todos: observable,
+            addTodo: action,
+            editTodo: action,
+            deleteTodo: action,
+            isComplete: action
+        });
     }
 
 
 
-    @observable todos: Itodo[] = []
-    @action addTodo = (item: Itodo) => {
+    addTodo = (item: Itodo) => {
         this.todos = [item, ...this.todos];
     }
 
-    @action editTodo = (update: Itodo) => {
+    isComplete = (id: string) => {
+        const result = this.todos.map(ele => {
+            if (ele.id === id) {
+                return { ...ele, isCompleted: !ele.isCompleted }
+            } else {
+                return ele
+            }
+        })
+        this.todos = result
+    }
+
+    editTodo = (update: Itodo) => {
         const result = this.todos.map(ele => {
             if (update.id === ele.id) {
                 return { ...update }
@@ -30,7 +51,7 @@ export class TodoStore {
         this.todos = result
     }
 
-    @action deleteTodo = (id: string) => {
+    deleteTodo = (id: string) => {
         const result = this.todos.filter(ele => {
             return id !== ele.id
         })
