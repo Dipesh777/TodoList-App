@@ -27,12 +27,13 @@ class AddTodo extends Component<Iprops, Istate> {
         }
     }
 
-
+    // handling form control
     handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         this.setState({ todo: event.target.value })
         // console.log(this.state.todo)
     }
 
+    // Handling Form submission
     @action handleSubmit = (event: React.SyntheticEvent) => {
         event.preventDefault()
         const formData = {
@@ -40,7 +41,7 @@ class AddTodo extends Component<Iprops, Istate> {
             name: this.state.todo,
             isCompleted: false
         }
-        
+        console.log("store", this.props.store?.todoStore.todos)
         this.props.store!.todoStore.addTodo(formData);
         this.setState((preState) => {
             return {

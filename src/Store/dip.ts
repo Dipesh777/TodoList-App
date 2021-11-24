@@ -1,6 +1,6 @@
 import { observable, action } from 'mobx'
 import React from 'react';
-import { Base } from './Base';
+
 import { Store } from './store';
 
 
@@ -12,11 +12,10 @@ interface Idipesh {
 }
 
 // Store
-export class Dip extends Base {
+export class Dip {
 
     constructor(store: Store) {
-        super(store);
-        this.store = store;
+
     }
     @observable dipesh: Idipesh[] = []
 

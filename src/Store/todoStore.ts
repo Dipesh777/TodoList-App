@@ -1,6 +1,4 @@
-import { observable, action } from 'mobx'
-import { threadId } from 'worker_threads';
-import { Base } from './Base';
+import { observable, action, makeObservable} from 'mobx'
 import { Store } from './store';
 
 interface Itodo {
@@ -10,10 +8,8 @@ interface Itodo {
 }
 
 // Store
-export class TodoStore extends Base {
-    constructor(store: Store) {
-        super(store);
-        this.store = store;
+export class TodoStore {
+    constructor(store: Store) {    
     }
 
 
@@ -21,7 +17,6 @@ export class TodoStore extends Base {
     @observable todos: Itodo[] = []
     @action addTodo = (item: Itodo) => {
         this.todos = [item, ...this.todos];
-        console.log(this.todos);
     }
 
     @action editTodo = (update: Itodo) => {
